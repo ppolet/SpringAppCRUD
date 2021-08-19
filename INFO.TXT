@@ -1,4 +1,6 @@
 Для размещения на heroku необходимо:
+https://devcenter.heroku.com/articles/java-webapp-runner
+
 - в файл pom.xml добавить
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
