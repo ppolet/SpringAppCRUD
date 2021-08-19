@@ -29,4 +29,10 @@ public class PersonDAO {
     public Person show(int id){
         return people.stream().filter(person -> person.getId() == id).findAny().orElse(null);
     }
+
+    //Добавляем человека в БД
+    public void save(Person person){
+        person.setId(++PEOPLE_COUNT); //id добавляем автоматически
+        people.add(person);
+    }
 }
