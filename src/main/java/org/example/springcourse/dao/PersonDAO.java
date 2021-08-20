@@ -35,4 +35,9 @@ public class PersonDAO {
         person.setId(++PEOPLE_COUNT); //id добавляем автоматически
         people.add(person);
     }
+
+    public void update(int id, Person updatePerson){
+        Person personToBeUpdated = show(id); //ищем человека по id, которого надо обновить
+        personToBeUpdated.setName(updatePerson.getName());
+    }
 }
