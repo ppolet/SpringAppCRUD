@@ -5,7 +5,10 @@ import org.example.springcourse.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
@@ -37,8 +40,12 @@ public class PeopleController {
         return "people/new";
     }
 
+    //@Valid - проверяем правильность заполнения, а в bindingResult получаем объект с ошибками валидации
     @PostMapping
-    public String create(@ModelAttribute("person") Person person){
+    public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult){
+        //если есть ошибки, то открываем форму для ввода нового человека и в этой форме уже будут отображены ошибки!!!
+        if(bindingResult.hasErrors()) return "people/new";
+
         personDAO.save(person);
         return "redirect:/people"; //переход (редирект) на страницу /people
     }
@@ -49,8 +56,12 @@ public class PeopleController {
         return "people/edit";
     }
 
+    //@Valid - проверяем правильность заполнения, а в bindingResult получаем объект с ошибками валидации
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Person person, @PathVariable("id") int id){
+    public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, @PathVariable("id") int id){
+        //если есть ошибки, то открываем форму для ввода нового человека и в этой форме уже будут отображены ошибки!!!
+        if(bindingResult.hasErrors()) return "people/edit";
+
         personDAO.update(id, person);
         return "redirect:/people";
     }
